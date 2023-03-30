@@ -1,4 +1,4 @@
-package io.catapult.kotlin.annotations
+package io.catapult.annotations
 
 import kotlin.reflect.KClass
 

@@ -1,9 +1,10 @@
-package io.catapult.kotlin
+package io.catapult.component
 
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import io.catapult.event.EventFlowable
 
 abstract class Component<T : UiView>(val view: View, private val lifecycleOwner: LifecycleOwner)
     : LifecycleEventObserver {

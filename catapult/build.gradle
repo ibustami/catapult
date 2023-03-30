@@ -4,16 +4,13 @@ plugins {
     id 'kotlin-kapt'
 
 }
-
 apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
 
 ext {
-    PUBLISH_GROUP_ID = 'io.github.ibustami'
-    PUBLISH_VERSION = '1.0.1'
-    PUBLISH_ARTIFACT_ID = 'catapult'
+    PUBLISH_GROUP_ID = project.rootProject.localProperties.getProperty('groupId')
+    PUBLISH_VERSION = project.rootProject.localProperties.getProperty('version')
+    PUBLISH_ARTIFACT_ID = project.rootProject.localProperties.getProperty('artifactId')
 }
-
-
 
 group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
@@ -54,9 +51,9 @@ dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
-
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

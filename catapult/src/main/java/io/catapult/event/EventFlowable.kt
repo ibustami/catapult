@@ -1,9 +1,9 @@
-package io.catapult.kotlin
+package io.catapult.event
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import io.catapult.kotlin.annotations.Subscribe
+import io.catapult.annotations.Subscribe
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import kotlin.reflect.KClass

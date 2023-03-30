@@ -1,4 +1,4 @@
-package io.catapult.kotlin
+package io.catapult.component
 
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
