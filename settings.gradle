@@ -3,6 +3,24 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven {
+            url 'https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/'
+
+            // Define local.properties
+            def localPropertiesFile = file('local.properties')
+            def localProperties = new Properties()
+
+            // Check if local.properties exists
+            if (localPropertiesFile.exists()) {
+                // Read local.properties file
+                new FileInputStream(localPropertiesFile).withCloseable { is -> localProperties.load(is) }
+            }
+
+            credentials {
+                username = localProperties.getProperty('ossrhUsername')
+                password = localProperties.getProperty('ossrhPassword')
+            }
+        }
     }
 }
 dependencyResolutionManagement {

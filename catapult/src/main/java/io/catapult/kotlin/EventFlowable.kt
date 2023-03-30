@@ -3,7 +3,6 @@ package io.catapult.kotlin
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import io.catapult.kotlin.annotations.Subscribe
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -103,7 +102,7 @@ class EventFlowable(val lifecycleOwner: LifecycleOwner): LifecycleEventObserver 
     }
 
     inline fun <reified T: Event> subscribe(lifecycleOwner: LifecycleOwner, kClass: KClass<*>, crossinline onEvent: (T) -> Unit) {
-        lifecycleOwner.lifecycleScope.launch {
+        CoroutineScope(Dispatchers.IO).launch {
             getShareFlow<T>(kClass).filterIsInstance<T>().flowOn(Dispatchers.IO).collectLatest { event ->
                 kotlin.coroutines.coroutineContext.ensureActive()
                 onEvent(event)

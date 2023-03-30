@@ -1,0 +1,29 @@
+
+def localPropertiesFile = rootProject.file('local.properties')
+def localProperties = new Properties()
+
+if (localPropertiesFile.exists()) {
+    // Read local.properties file first if it exists
+    new FileInputStream(localPropertiesFile).withCloseable { is -> localProperties.load(is) }
+    rootProject.ext.localProperties = localProperties
+} else {
+    // Use system environment variables
+    ext["signing.key"] = System.getenv('SIGNING_KEY')
+    ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
+    ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
+    ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
+    ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
+    ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
+}
+
+nexusPublishing {
+    repositories {
+        sonatype {
+            stagingProfileId = localProperties.getProperty('sonatypeStagingProfileId')
+            username = localProperties.getProperty('ossrhUsername')
+            password = localProperties.getProperty('ossrhPassword')
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
+        }
+    }
+}
