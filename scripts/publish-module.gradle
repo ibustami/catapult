@@ -4,13 +4,8 @@ apply plugin: 'signing'
 task androidSourcesJar(type: Jar) {
     archiveClassifier.set('sources')
     if (project.plugins.findPlugin("com.android.library")) {
-        // For Android libraries
         from android.sourceSets.main.java.srcDirs
         from android.sourceSets.main.kotlin.srcDirs
-    } else {
-        // For pure Kotlin libraries, in case you have them
-        from sourceSets.main.java.srcDirs
-        from sourceSets.main.kotlin.srcDirs
     }
 }
 
@@ -37,7 +32,7 @@ afterEvaluate {
                 pom {
                     name = 'catapult'
                     description = 'Module to simplify data communication and user interaction'
-                    url = 'https://github.com/ibustami/catapult-kotlin'
+                    url = 'https://github.com/ibustami/catapult'
 
                     licenses {
                         license {
@@ -55,9 +50,9 @@ afterEvaluate {
                     }
 
                     scm {
-                        connection = 'scm:git:https://github.com/ibustami/catapult-kotlin.git'
-                        developerConnection = 'scm:git:ssh://github.com/ibustami/catapult-kotlin.git'
-                        url = 'https://github.com/ibustami/catapult-kotlin'
+                        connection = 'scm:git:https://github.com/ibustami/catapult.git'
+                        developerConnection = 'scm:git:ssh://github.com/ibustami/catapult.git'
+                        url = 'https://github.com/ibustami/catapult'
                     }
                 }
 

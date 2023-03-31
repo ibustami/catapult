@@ -16,7 +16,7 @@ group = PUBLISH_GROUP_ID
 version = PUBLISH_VERSION
 
 android {
-    namespace 'io.catapult.kotlin'
+    namespace 'io.catapult'
     compileSdk 31
 
     defaultConfig {
@@ -52,7 +52,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
 
     testImplementation 'junit:junit:4.13.2'
