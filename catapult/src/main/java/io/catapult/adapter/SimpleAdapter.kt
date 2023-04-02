@@ -6,25 +6,31 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.reflect.KClass
 
-open class SimpleAdapter<T>(
-    private val viewHolderProvider: (ViewGroup, Int) -> ViewHolder<T>
-) : ListAdapter<SimpleAdapter.Item<T>, SimpleAdapter.ViewHolder<T>>(SimpleDiffCallback()) {
+// set alias Int to view type of item view layout
+typealias ViewType = Int
+
+open class SimpleAdapter(
+    private val viewHolderProvider: (ViewType) -> KClass<ViewHolder<Any>>
+) : ListAdapter<SimpleAdapter.Item<Any>, SimpleAdapter.ViewHolder<Any>>(SimpleDiffCallback()) {
 
     interface OnBindAdditional {
         fun onBindAdditional(vararg additionalItems: Any)
     }
 
-    abstract class ViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        abstract fun bind(itemData: T)
+    open class ViewHolder<T: Any>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        open fun bind(itemData: T) = Unit
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<T> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<Any> {
+        val kClass = viewHolderProvider(viewType)
+        val constructor = kClass.constructors.first()
         val view = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return viewHolderProvider(parent, viewType).apply { itemView.tag = view }
+        return constructor.call(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder<T>, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder<Any>, position: Int) {
         val item = getItem(position)
         holder.bind(item.itemData)
 
@@ -33,6 +39,28 @@ open class SimpleAdapter<T>(
                 holder.onBindAdditional(*additionalItems)
             }
         }
+    }
+
+    fun addItems(viewType: ViewType, items: List<Any>, position: Int? = null, additionalItems: Array<Any>? = null) {
+        val newList = items.map { Item(viewType, it, additionalItems) }
+        val oldList = currentList.toMutableList()
+        position?.let {
+            oldList.addAll(position, newList)
+        } ?: run {
+            oldList.addAll(newList)
+        }
+        submitList(oldList)
+    }
+
+    fun addItem(viewType: ViewType, item: Any, position: Int? = null, additionalItems: Array<Any>? = null) {
+        val newItem = Item(viewType, item, additionalItems)
+        val oldList = currentList.toMutableList()
+        position?.let {
+            oldList.add(position, newItem)
+        } ?: run {
+            oldList.add(newItem)
+        }
+        submitList(oldList)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -52,13 +80,18 @@ open class SimpleAdapter<T>(
 
             if (viewType != other.viewType) return false
             if (itemData != other.itemData) return false
+            if (additionalItems != null) {
+                if (other.additionalItems == null) return false
+                if (!additionalItems.contentEquals(other.additionalItems)) return false
+            } else if (other.additionalItems != null) return false
 
             return true
         }
 
         override fun hashCode(): Int {
             var result = viewType
-            result = 31 * result + (itemData?.hashCode() ?: 0)
+            result = 31 * result + itemData.hashCode()
+            result = 31 * result + (additionalItems?.contentHashCode() ?: 0)
             return result
         }
     }
@@ -72,4 +105,5 @@ open class SimpleAdapter<T>(
             return oldItem == newItem
         }
     }
+
 }
