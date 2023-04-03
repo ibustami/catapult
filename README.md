@@ -1,5 +1,8 @@
 # Catapult
 
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.ibustami/catapult.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.ibustami%22%20AND%20a:%22catapult%22)
+
+
 Catapult is an Android library that provides easy-to-use classes and utilities for building modern Android applications. It includes a variety of components and helpers that make it easy to create responsive, high-performance apps with a modern UI.
 
 ## Installation
@@ -7,7 +10,7 @@ To use Catapult in your Android project, add the following dependency to your bu
 
 ```gradle
 dependencies {
-    implementation 'io.github.ibustami:catapult:1.0.5'
+    implementation 'io.github.ibustami:catapult:{latest_version}'
 }
 ```
 
