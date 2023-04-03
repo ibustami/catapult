@@ -1,4 +1,4 @@
-# Project Title
+# Catapult
 
 Catapult is an Android library that provides easy-to-use classes and utilities for building modern Android applications. It includes a variety of components and helpers that make it easy to create responsive, high-performance apps with a modern UI.
 
