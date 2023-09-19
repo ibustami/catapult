@@ -20,13 +20,13 @@ class CatapultUiView(view: View, eventFlowable: EventFlowable): UiView(view,even
     }
 
     private val adapter by lazy {
-        SimpleAdapter{
-                when (it) {
-                    R.layout.item_city -> CityAndFoodViewHolder::class as KClass<SimpleAdapter.ViewHolder<Any>>
-                    R.layout.item_restaurant -> RestaurantViewHolder::class as KClass<SimpleAdapter.ViewHolder<Any>>
-                    else -> throw IllegalArgumentException("Unknown binding: $it")
-                }
+        SimpleAdapter {
+            when (it) {
+                R.layout.item_city -> CityAndFoodViewHolder::class as KClass<SimpleAdapter.ViewHolder<Any>>
+                R.layout.item_restaurant -> RestaurantViewHolder::class as KClass<SimpleAdapter.ViewHolder<Any>>
+                else -> throw IllegalArgumentException("Unknown binding: $it")
             }
+        }
     }
 
     fun onCreate() {
@@ -42,7 +42,11 @@ class CatapultUiView(view: View, eventFlowable: EventFlowable): UiView(view,even
     }
 
     private fun setupRecyclerView() {
-        binding.recyclerView.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerView.layoutManager = LinearLayoutManager(
+            view.context,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
         binding.recyclerView.adapter = adapter
     }
 

@@ -14,15 +14,12 @@ class CatapultComponent(view: View, lifecycleOwner: LifecycleOwner)
     override fun onCreateView(view: View, eventFlowable: EventFlowable) =
         CatapultUiView(view, eventFlowable)
 
-
-
     @Subscribe(CatapultComponent::class)
     fun subscribeCityLoaded(cityLoaded: CityLoaded) {
         cityLoaded.data?.let {
             uiView.show()
             uiView.loadCities(it)
         } ?: run { uiView.hide() }
-
     }
 
     override fun onCreate() {

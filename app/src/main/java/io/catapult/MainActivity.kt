@@ -1,19 +1,14 @@
 package io.catapult
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import io.catapult.adapter.SimpleAdapter
+import androidx.appcompat.app.AppCompatActivity
 import io.catapult.component.ComponentProvider
 import io.catapult.component.ComponentProviders
 import io.catapult.databinding.ActivityMainBinding
 import io.catapult.databinding.ComponentMainBinding
 import io.catapult.event.EventFlowable
 import io.catapult.ui.component.CatapultComponent
-import io.catapult.ui.component.viewholder.CityAndFoodViewHolder
-import io.catapult.ui.component.viewholder.RestaurantViewHolder
 import io.catapult.util.viewModelDelegate
-import kotlin.reflect.KClass
 
 class MainActivity : AppCompatActivity() {
 
